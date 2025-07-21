@@ -1,0 +1,39 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Get User Id</title>
+  <script>
+    function sendPhoneNumber() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const sender = urlParams.get("senderId");
+      const phoneNumber = urlParams.get("phone_number");
+
+      if (sender && phoneNumber) {
+        const dataObject = {
+          sender: sender,
+          phone_number: phoneNumber
+        };
+
+        const payload = {
+          event: "sendPhoneNumber",
+          data: JSON.stringify(dataObject)
+        };
+
+        top.postMessage(payload, "*");
+
+        console.log("Sent phone number payload:", payload);
+      } else {
+        alert("Missing senderId or phone_number in URL");
+        console.error("Missing senderId or phone_number in URL");
+      }
+    }
+  </script>
+</head>
+
+<body>
+  <button onclick="sendPhoneNumber()">Get User Id</button>
+</body>
+
+</html>
