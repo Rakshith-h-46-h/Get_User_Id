@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -7,13 +8,15 @@
   <script>
     function sendPhoneNumber() {
       const urlParams = new URLSearchParams(window.location.search);
-      const sender = urlParams.get("senderId");
-      const phoneNumber = urlParams.get("phone_number");
+      const sender = urlParams.get("senderId")?.trim();
+      const phoneNumber = urlParams.get("phone_number")?.trim();
+      const kycStatus = urlParams.get("kyc_status")?.trim();
 
-      if (sender && phoneNumber) {
+      if (sender && phoneNumber && kycStatus) {
         const dataObject = {
           sender: sender,
-          phone_number: phoneNumber
+          phone_number: phoneNumber,
+          kyc_status: kycStatus
         };
 
         const payload = {
@@ -24,9 +27,10 @@
         top.postMessage(payload, "*");
 
         console.log("Sent phone number payload:", payload);
+        alert("Phone number and KYC status sent successfully!");
       } else {
-        alert("Missing senderId or phone_number in URL");
-        console.error("Missing senderId or phone_number in URL");
+        alert("Missing senderId, phone_number, or kyc_status in URL");
+        console.error("Missing senderId, phone_number, or kyc_status in URL");
       }
     }
   </script>
