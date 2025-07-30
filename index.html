@@ -24,13 +24,25 @@
           data: JSON.stringify(dataObject)
         };
 
+        // First message (general use)
         top.postMessage(payload, "*");
 
+        // Second message (e.g., for YM or specific integration)
+        window.parent.postMessage({
+          event_code: 'ym-client-event',
+          data: JSON.stringify({
+            event: {
+              code: "sendPhoneNumber",
+              data: {
+                eventdata: dataObject   // ✅ FIXED: was 'data' earlier
+              }
+            }
+          })
+        }, '*');
+
         console.log("Sent phone number payload:", payload);
-        alert("Phone number and KYC status sent successfully!");
       } else {
-        alert("Missing senderId, phone_number, or kyc_status in URL");
-        console.error("Missing senderId, phone_number, or kyc_status in URL");
+        console.error("Missing required parameters:", { sender, phoneNumber, kycStatus });
       }
     }
   </script>
