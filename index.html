@@ -11,12 +11,14 @@
       const sender = urlParams.get("senderId")?.trim();
       const phoneNumber = urlParams.get("phone_number")?.trim();
       const kycStatus = urlParams.get("kyc_status")?.trim();
+      const old_phone_number = urlParams.get("old_phone_number")?.trim();
 
       if (sender && phoneNumber && kycStatus) {
         const dataObject = {
           sender: sender,
           phone_number: phoneNumber,
-          kyc_status: kycStatus
+          kyc_status: kycStatus,
+          old_phone_number: old_phone_number
         };
 
         const payload = {
